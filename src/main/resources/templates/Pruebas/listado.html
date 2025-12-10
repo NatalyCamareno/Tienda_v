@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<!-- Se indica que se desea incorporar en la pagina la capacidad para tener paginas html extendidas, th es un prefijo que da apertura a la libreria thymeleaf,lo mismo con sec -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <!-- thfragment es para hacer uno y threplace es para traer un fragmento-->
+    <!-- th:replace dice "traiga lo que hay en layout/plantilla y pongalo aqui-->
+    <body>
+
+        <head th:replace="~{layout/plantilla :: head}"/>
+
+        <header th:replace="~{layout/plantilla :: header}"/>
+
+        <section th:replace="~{pruebas/fragmentos :: tabsCategorias}"/>
+        <section th:replace="~{pruebas/fragmentos :: tarjetas}"/>
+        
+        <footer th:replace="~{layout/plantilla :: footer}"/>
+    </body>
+</html>

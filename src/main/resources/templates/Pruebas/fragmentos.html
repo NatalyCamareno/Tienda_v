@@ -1,0 +1,207 @@
+<!-- Se indica que se desea incorporar en la pagina la capacidad para tener paginas html extendidas, th es un prefijo que da apertura a la libreria thymeleaf,lo mismo con sec -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <!-- thfragment es para hacer uno y threplace es para traer un fragmento-->
+    <!-- th:replace dice "traiga lo que hay en layout/plantilla y pongalo aqui-->
+    <head th:replace="~{layout/plantilla :: head}"/>
+    <body>
+        <section th:fragment="tabsCategorias">
+            <ul class="nav nav-underline p-3">
+                <li class="nav-item">
+                    <a class="nav-link" href="/pruebas/listado">[[#{pruebas.todas}]]</a>
+                </li>
+                <li th:each="c : ${categorias}" class="nav-item">
+                    <a class="nav-link" th:href="@{/pruebas/listado/}+${c.idCategoria}">[[${c.descripcion}]]</a>
+                </li>
+                <li class="nav-item">
+            </ul>
+        </section>
+        <section th:fragment="tarjetas">
+            <div class="row row-cols-4 p-2">
+                <div class="card" th:each="p : ${productos}">
+                    <figure>
+                        <div class="d-flex justify-content-center">
+                            <img th:src="${p.rutaImagen}" height="200" alt="..."/>
+                        </div>
+                        <figcaption class="d-flex justify-content-evenly">
+                            <span>₡[[${p.precio}]]</span>
+                            <span>([[${p.existencias}]])</span>
+                            <form>
+                                <input type="hidden" th:value="${p.idProducto}" name="idProducto"/>
+                                <input type="hidden" th:value="${p.existencias}" name="existencias"/>
+                                <button type ="button" class="btn btn-light" onclick="addCart(this.form)">
+                                    <i class="fas fa-cart-arrow-down"></i>
+                                </button>
+                            </form>
+                        </figcaption>
+                    </figure>
+                    <div class="card-header">
+                        <h5 class="text-center">[[${p.descripcion}]]</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>[[${p.detalle}]]</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section th:fragment ="filtros">
+            <div class = "row row-cols-4 p-2">
+                <form th:action ="@{/pruebas/query1}"
+                      method="post"
+                      class="was-validated">
+                    <div class="card p-2">
+                        <div class ="card-header text-center text-white bg-primary">
+                            <h5> [[#{pruebas.ampliadas}]] </h5>
+                        </div>
+                        <div class = "card-body">
+                            <div class = "mb-3">
+                                <label> [[#{pruebas.precio.inferior}]]</label>
+                                <input type = "number"
+                                       class = "form-control"
+                                       name = "precioInf"
+                                       th:value = "${precioInf}"
+                                       min = "0"
+                                       required = "true"/>
+                            </div>
+                        </div>
+                        <div class = "card-body">
+                            <div class = "mb-3">
+                                <label> [[#{pruebas.precio.superior}]]</label>
+                                <input type = "number"
+                                       class = "form-control"
+                                       name = "precioSup"
+                                       th:value = "${precioSup}"
+                                       min = "0"
+                                       required = "true"/>
+                            </div>
+                        </div>
+                        <div class ="card-footer text-center">
+                            <button type ="submit"
+                                    class ="btn btn-primary text white">
+                                <i class="fa-solid fa-magnifying-glass"></i> [[#{pruebas.ampliadas}]]
+
+                            </button>
+                        </div>
+                    </div>
+                </form>                        
+                <form th:action ="@{/pruebas/query2}"
+                      method="post"
+                      class="was-validated">
+                    <div class="card p-2">
+                        <div class ="card-header text-center text-white bg-info">
+                            <h5> [[#{pruebas.jpql}]] </h5>
+                        </div>
+                        <div class = "card-body">
+                            <div class = "mb-3">
+                                <label> [[#{pruebas.precio.inferior}]]</label>
+                                <input type = "number"
+                                       class = "form-control"
+                                       name = "precioInf"
+                                       th:value = "${precioInf}"
+                                       min = "0"
+                                       required = "true"/>
+                            </div>
+                        </div>
+                        <div class = "card-body">
+                            <div class = "mb-3">
+                                <label> [[#{pruebas.precio.superior}]]</label>
+                                <input type = "number"
+                                       class = "form-control"
+                                       name = "precioSup"
+                                       th:value = "${precioSup}"
+                                       min = "0"
+                                       required = "true"/>
+                            </div>
+                        </div>
+                        <div class ="card-footer text-center">
+                            <button type ="submit"
+                                    class ="btn btn-info text white">
+                                <i class="fa-solid fa-magnifying-glass"></i> [[#{pruebas.jpql}]]
+
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <form th:action ="@{/pruebas/query3}"
+                      method="post"
+                      class="was-validated">
+                    <div class="card p-2">
+                        <div class ="card-header text-center text-white bg-success">
+                            <h5> [[#{pruebas.nativo}]]
+                        </div>
+                        <div class = "card-body">
+                            <div class = "mb-3">
+                                <label> [[#{pruebas.precio.inferior}]]</label>
+                                <input type = "number"
+                                       class = "form-control"
+                                       name = "precioInf"
+                                       th:value = "${precioInf}"
+                                       min = "0"
+                                       required = "true"/>
+                            </div>
+                        </div>
+                        <div class = "card-body">
+                            <div class = "mb-3">
+                                <label> [[#{pruebas.precio.superior}]]</label>
+                                <input type = "number"
+                                       class = "form-control"
+                                       name = "precioSup"
+                                       th:value = "${precioSup}"
+                                       min = "0"
+                                       required = "true"/>
+                            </div>
+                        </div>
+                        <div class ="card-footer text-center">
+                            <button type ="submit"
+                                    class ="btn btn-sucess text white">
+                                <i class="fa-solid fa-magnifying-glass"></i> [[#{pruebas.nativo}]]
+
+                            </button>
+                        </div>
+                    </div>
+                </form>  
+                <form th:action ="@{/pruebas/query4}"
+                      method="post"
+                      class="was-validated">
+                    <div class="card p-2">
+                        <div class ="card-header text-center text-white bg-warning">
+                            <h5> [[#{pruebas.ampliadas.existencias}]] </h5>
+                        </div>
+                        <div class = "card-body">
+                            <div class = "mb-3">
+                                <label> [[#{pruebas.existencias.inferior}]]</label>
+                                <input type = "number"
+                                       class = "form-control"
+                                       name = "existenciasInf"
+                                       th:value = "${existenciasInf}"
+                                       min = "0"
+                                       required = "true"/>
+                            </div>
+                        </div>
+                        <div class = "card-body">
+                            <div class = "mb-3">
+                                <label> [[#{pruebas.existencias.superior}]]</label>
+                                <input type = "number"
+                                       class = "form-control"
+                                       name = "existenciasSup"
+                                       th:value = "${existenciasSup}"
+                                       min = "0"
+                                       required = "true"/>
+                            </div>
+                        </div>
+                        <div class ="card-footer text-center">
+                            <button type ="submit"
+                                    class ="btn btn-warning text white">
+                                <i class="fa-solid fa-magnifying-glass"></i> [[#{pruebas.ampliadas}]]
+
+                            </button>
+                        </div>
+                    </div>
+                </form>    
+            </div>
+
+        </section>
+    </body>
+</html>
