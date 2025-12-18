@@ -1,8 +1,8 @@
 package com.tienda.service;
 
-import com.tienda.domain.Rol;
-import com.tienda.domain.Usuario;
-import com.tienda.repository.UsuarioRepository;
+import com.Tienda.Tienda.domain.Rol;
+import com.Tienda.Tienda.domain.Usuario;
+import com.Tienda.Tienda.repository.UsuarioRepository;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
